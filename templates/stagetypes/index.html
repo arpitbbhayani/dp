@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<a class="ui button" href="/stage-types/create">Create a new stage Type</a>
+<div class="ui list">
+{% for stagetype in stagetypes %}
+    <div class="item">
+        <a href="/stage-types/{{stagetype.slug}}">{{stagetype.name}}</a>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

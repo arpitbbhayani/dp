@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<a class="ui button" href="/pipeline-types/create">Create a new Pipeline Type</a>
+<div class="ui list">
+{% for pipelinetype in pipelinetypes %}
+    <div class="item">
+        <a href="/pipeline-types/{{pipelinetype.slug}}">{{pipelinetype.name}}</a>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+amqp==2.2.1
+billiard==3.5.0.3
+celery==4.1.0
+click==6.7
+Flask==0.12.2
+itsdangerous==0.24
+Jinja2==2.9.6
+kombu==4.1.0
+MarkupSafe==1.0
+pymongo==3.5.1
+pytz==2017.2
+redis==2.10.6
+vine==1.1.4
+Werkzeug==0.12.2

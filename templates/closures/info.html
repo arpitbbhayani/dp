@@ -1,0 +1,169 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="ui horizontal list">
+    <div class="item">
+        <div class="ui header">{{closure.name}}</div>
+    </div>
+    <div class="item">
+        <form class="ui form" action="/closures/{{closure._id}}/provisions" method="post">
+            <button class="ui button" type="submit">Provision</button>
+        </form>
+    </div>
+    <div class="item">
+        <a href="/closures/{{closure._id}}/provisions" type="submit">All Provisions</a>
+    </div>
+    {% if status %}
+    <div class="right item">
+        <form action="/closures/{{closure._id}}/processes/{{closure.name}}:/start" method="POST">
+            <button class="ui green button" type="submit">Start All</button>
+        </form>
+    </div>
+    <div class="right item">
+        <form action="/closures/{{closure._id}}/processes/{{closure.name}}:/stop" method="POST">
+            <button class="ui red button" type="submit">Stop All</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+<div class="ui basic segment">
+    {% if not status %}
+    <div class="ui red header">NOT PROVISIONED</div>
+    {% else %}
+    <table class="ui table">
+        <thead>
+            <tr>
+                <th>Process</th>
+                <th>State</th>
+                <th>Time Elapsed</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for process, meta in status.items() %}
+            <tr>
+                <td>{{process}}</td>
+                <td>
+                    {% if meta.state == 'RUNNING' %}
+                        <div class="ui green label">{{meta.state}}</div>
+                    {% else %}
+                        <div class="ui red label">{{meta.state}}</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if meta.state == 'RUNNING' %}
+                        {{meta.elapsed}}
+                    {% endif %}
+                </td>
+                <td class="right aligned">
+                    {% if meta.state == 'RUNNING' %}
+                    <form action="/closures/{{closure._id}}/processes/{{meta.id}}/stop" method="POST">
+                        <button class="ui red button" type="submit">Stop</button>
+                    </form>
+                    {% else %}
+                        <form action="/closures/{{closure._id}}/processes/{{meta.id}}/start" method="POST">
+                            <button class="ui green button" type="submit">Start</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+<div class="ui segment">
+    <div class="ui header">Components</div>
+    <div class="ui five column grid">
+        <div class="column">
+            <div class="ui header">Stages</div>
+            <div class="ui list">
+            {% for stage in stages %}
+                <div class="ui item">
+                    <a href="/closures/{{closure._id}}/stages/{{stage._id}}">{{stage.name}}</a>
+                </div>
+            {% endfor %}
+                <div class="ui item">
+                    <a href="/closures/{{closure._id}}/stages/create">Create Stage</a>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="ui header">Pipelines</div>
+            <div class="ui list">
+            {% for pipeline in pipelines %}
+                <div class="ui item">
+                    <a href="/closures/{{closure._id}}/pipelines/{{pipeline._id}}">{{pipeline.name}}</a>
+                </div>
+            {% endfor %}
+                <div class="ui item">
+                    <a href="/closures/{{closure._id}}/pipelines/create">Create Pipeline</a>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="ui header">Transforms</div>
+            <div class="ui list">
+            {% for transform in transforms %}
+                <div class="ui item">
+                    <a href="/closures/{{closure._id}}/transforms/{{transform._id}}">{{transform.name}}</a>
+                </div>
+            {% endfor %}
+                <div class="ui item">
+                    <a href="/closures/{{closure._id}}/transforms/create">Create Transform</a>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="ui header">Pullers</div>
+            <div class="ui list">
+            {% for puller in pullers %}
+                <div class="ui item">
+                    <a href="/closures/{{closure._id}}/pullers/{{puller._id}}">{{puller.name}}</a>
+                </div>
+            {% endfor %}
+                <div class="ui item">
+                    <a href="/closures/{{closure._id}}/pullers/create">Create Puller</a>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="ui header">Pushers</div>
+            <div class="ui list">
+            {% for pusher in pushers %}
+                <div class="ui item">
+                    <a href="/closures/{{closure._id}}/pushers/{{pusher._id}}">{{pusher.name}}</a>
+                </div>
+            {% endfor %}
+                <div class="ui item">
+                    <a href="/closures/{{closure._id}}/pushers/create">Create Pusher</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form class="ui sixteen columns grid" method="POST" action="/closures/{{closure._id}}">
+    <div class="ui row">
+        <div class="ui eight wide column">
+            <div class="ui form">
+                <div class="ui field">
+                    <textarea name="graph" id="graph-source" style="font-family: monospace; height: 100%;">{{closure.graph}}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="ui eight wide column center aligned">
+            <div id="graph-render"></div>
+        </div>
+    </div>
+    <div class="ui center aligned row">
+        <div class="ui sixteen wide column">
+            <button class="ui button" type="submit">
+                    Save Closure
+            </button>
+        </div>
+    </div>
+</form>
+{% endblock %}

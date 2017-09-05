@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<form class="ui form" method="post" action="/closures/create">
+    <div class="ui field">
+        <input type="text" name="name" placeholder="a cool name for your closure" />
+    </div>
+    <div class="ui field">
+        <input type="submit" class="ui button" value="Create" />
+    </div>
+</form>
+{% endblock %}

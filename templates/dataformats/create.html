@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<form class="ui form" method="post" action="/data-formats/create">
+    <div class="ui field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="a cool name for your data format" />
+    </div>
+    <div class="ui field">
+        <label>Slug</label>
+        <input type="text" name="slug" placeholder="a cool unique slug for your data format" />
+    </div>
+    <div class="ui field">
+        <label>Description</label>
+        <input type="text" name="description" placeholder="description" />
+    </div>
+    <div class="ui field">
+        <input type="submit" class="ui button" value="Create" />
+    </div>
+</form>
+{% endblock %}

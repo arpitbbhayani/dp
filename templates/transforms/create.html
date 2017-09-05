@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<form class="ui form" method="post" action="/closures/{{cid}}/transforms/create">
+    <div class="ui field">
+        <input type="text" name="name" placeholder="a cool name for your transform" />
+    </div>
+    <div class="ui field">
+        <input type="submit" class="ui button" value="Create" />
+    </div>
+</form>
+{% endblock %}

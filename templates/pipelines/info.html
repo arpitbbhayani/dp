@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<a class="ui button" href="/closures/{{pipeline.cid}}/pipelines/{{pipeline._id}}/edit">Edit</a>
+<pre>{{pipelineJSON}}</pre>
+{% endblock %}

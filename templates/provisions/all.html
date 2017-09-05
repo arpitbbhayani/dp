@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+{% for provision in provisions %}
+    <a href="/closures/{{provision.cid}}/provisions/{{provision._id}}">{{provision._id}} ({{provision.created_at}})</a><br/>
+{% endfor %}
+{% endblock %}

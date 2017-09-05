@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="ui header">
+    {{provision._id}} ({{provision.created_at}}): STATE - {{provision.state}}
+</div>
+<div class="ui divider"></div>
+
+{% if provision.state == 'FAILED' %}
+<div class="ui basic segment">
+    <pre style="color: red;">{{provision.error}}</pre>
+</div>
+{% endif %}
+
+<div class="ui basic segment">
+    {% for entity, info in provision.details.items() %}
+        <div class="ui header">
+            {{entity}}
+        </div>
+        <div class="ui basic segment">
+            {% for k, logs in info.items() %}
+                <div class="ui header">
+                    {{k}}
+                </div>
+                <div class="ui list">
+                    {% for log in logs %}
+                    <div class="item">
+                        <p>
+                            {% if log[0] == 'SUCCESS' %}
+                                {% set color = 'green' %}
+                            {% elif log[0] == 'FAIL' %}
+                                {% set color = 'red' %}
+                            {% elif log[0] == 'INFO' %}
+                                {% set color = 'black' %}
+                            {% endif %}
+                            <pre style="overflow-x: auto; color: {{color}}">{{log[1]}}</pre>
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+    {% endfor %}
+</div>
+{% endblock %}

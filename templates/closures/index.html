@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<a class="ui button" href="/closures/create">Create a new Closure</a>
+<div class="ui list">
+{% for closure in closures %}
+    <div class="item">
+        <a href="/closures/{{closure._id}}">{{closure.name}}</a>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

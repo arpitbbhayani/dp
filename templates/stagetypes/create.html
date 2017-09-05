@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<form class="ui form" method="post" action="/stage-types/create">
+    <div class="ui field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="a cool name for your stage type" />
+    </div>
+    <div class="ui field">
+        <label>Slug</label>
+        <input type="text" name="slug" placeholder="a cool unique slug for your stage type" />
+    </div>
+    <div class="ui field">
+        <label>Parameters</label>
+        <input type="text" name="params" placeholder="CSV of extra information to ask for" />
+    </div>
+    <div class="ui field">
+        <input type="submit" class="ui button" value="Create" />
+    </div>
+</form>
+{% endblock %}

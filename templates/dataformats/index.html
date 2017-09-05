@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<a class="ui button" href="/data-formats/create">Create a new Data Format</a>
+<div class="ui list">
+{% for dataformat in dataformats %}
+    <div class="item">
+        <a href="/data-formats/{{dataformat.slug}}">{{dataformat.name}}</a>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

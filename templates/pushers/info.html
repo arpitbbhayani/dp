@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<a class="ui button" href="/closures/{{pusher.cid}}/pushers/{{pusher._id}}/edit">Edit</a>
+<pre>{{pusherJSON}}</pre>
+{% endblock %}

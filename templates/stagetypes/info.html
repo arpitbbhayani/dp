@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="ui header">{{stagetype.name}} ({{stagetype.slug}})</div>
+<p>Parameters to ask for</p>
+<div class="ui list">
+    {% for p in stagetype.params %}
+        <div class="ui item">{{p}}</div>
+    {% endfor %}
+</div>
+{% endblock %}

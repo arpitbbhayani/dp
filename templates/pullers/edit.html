@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<form class="ui form" method="post" action="/closures/{{puller.cid}}/pullers/{{puller._id}}/edit">
+    <div class="ui field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="a cool name for your puller" value="{{puller.name}}" />
+    </div>
+    <div class="ui field">
+        <label>Input Data Format</label>
+        <div class="ui selection dropdown">
+            <input name="input-format" value="{{puller.input_source and puller.input_source.meta and puller.input_source.meta.format}}" type="hidden" />
+            <div class="default text">Input Data Format</div>
+            <div class="menu">
+                {% for df in dataformats %}
+                <div class="item" data-value="{{df.slug}}">{{df.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui field">
+        <label>Stage Type</label>
+        <div class="ui selection dropdown" id="stage-type">
+            <input name="stage-type" value="{{puller.input_source and puller.input_source.type}}" type="hidden" />
+            <div class="default text">Stage Type</div>
+            <div class="menu">
+                {% for st in stagetypes %}
+                    <div class="item" data-value="{{st.slug}}">{{st.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui field">
+        <div id="stage-type-meta"></div>
+    </div>
+    <div class="ui field">
+        <label>Pipeline Data Format</label>
+        <div class="ui selection dropdown">
+            <input name="pipeline-format" value="{{puller.pipeline and puller.pipeline.meta and puller.pipeline.meta.format}}" type="hidden" />
+            <div class="default text">Pipeline Data Format</div>
+            <div class="menu">
+                {% for df in dataformats %}
+                <div class="item" data-value="{{df.slug}}">{{df.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui field">
+        <label>Pipeline Type</label>
+        <div class="ui selection dropdown" id="pipeline-type">
+            <input name="pipeline-type" value="{{puller.pipeline and puller.pipeline.type}}" type="hidden" />
+            <div class="default text">Pipeline Type</div>
+            <div class="menu">
+                {% for pt in pipelinetypes %}
+                    <div class="item" data-value="{{pt.slug}}">{{pt.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui field">
+        <div id="pipeline-type-meta"></div>
+    </div>
+    <div class="ui field">
+        <input type="submit" class="ui button" value="Save" />
+    </div>
+</form>
+<script>
+$(document).ready(function() {
+    $('#pipeline-type').dropdown('setting', 'onChange', function(value, text) {
+        $.get('/partials/meta/pipelinetypes/' + value + '/pipeline', function(response) {
+            $('#pipeline-type-meta').html(response);
+        });
+    });
+    $('#stage-type').dropdown('setting', 'onChange', function(value, text) {
+        $.get('/partials/meta/stagetypes/' + value + '/input-source', function(response) {
+            $('#stage-type-meta').html(response);
+        });
+    });
+});
+</script>
+{% endblock %}

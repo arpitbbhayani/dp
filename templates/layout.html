@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Stacs</title>
+        <link rel="stylesheet" href="/static/css/semantic.min.css" />
+        <script type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="/static/js/semantic.min.js"> </script>
+        <script type="text/javascript" src="/static/js/viz-lite.js"> </script>
+        <script type="text/javascript" src="/static/js/engine.js"> </script>
+    </head>
+    <body>
+        <div class="ui secondary top menu">
+            <div class="item ui header">
+                <a href="/">Stacs</a>
+            </div>
+            <div class="ui secondary right menu">
+                <div class="item">
+                    <a href="/stage-types">Stage Types</a>
+                </div>
+                <div class="item">
+                    <a href="/pipeline-types">Pipeline Types</a>
+                </div>
+                <div class="item">
+                    <a href="/data-formats">Data Formats</a>
+                </div>
+                <div class="item">
+                    <a href="/closures">Closures</a>
+                </div>
+            </div>
+        </div>
+        <div class="ui basic segment">
+            {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>

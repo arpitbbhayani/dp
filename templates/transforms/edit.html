@@ -1,0 +1,83 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<form class="ui form" method="post" action="/closures/{{transform.cid}}/transforms/{{transform._id}}/edit">
+    <div class="ui field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="a cool name for your transform" value="{{transform.name}}" />
+    </div>
+    <div class="ui field">
+        <label>Input Data Format</label>
+        <div class="ui selection dropdown">
+            <input name="input-format" value="{{transform.input_source and transform.input_source.meta and transform.input_source.meta.format}}" type="hidden" />
+            <div class="default text">Input Data Format</div>
+            <div class="menu">
+                {% for df in dataformats %}
+                <div class="item" data-value="{{df.slug}}">{{df.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui field">
+        <label>Input Data Source</label>
+        <div class="ui selection dropdown" id="transform-input-source">
+            <input name="input-source" value="{{transform.input_source and transform.input_source.type}}" type="hidden" />
+            <div class="default text">Input Data Source</div>
+            <div class="menu">
+                {% for pt in pipelinetypes %}
+                    <div class="item" data-value="{{pt.slug}}">{{pt.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui field">
+        <div id="transform-input-source-meta">
+        </div>
+    </div>
+    <div class="ui field">
+        <label>Output Data Format</label>
+        <div class="ui selection dropdown">
+            <input name="output-format" value="{{transform.output_target and transform.output_target.meta and transform.output_target.meta.format}}" type="hidden" />
+            <div class="default text">Output Data Format</div>
+            <div class="menu">
+                {% for df in dataformats %}
+                <div class="item" data-value="{{df.slug}}">{{df.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui field">
+        <label>Output Data Target</label>
+        <div class="ui selection dropdown" id="transform-output-target">
+            <input name="output-target" value="{{transform.output_target and transform.output_target.type}}" type="hidden" />
+            <div class="default text">Output Data Target</div>
+            <div class="menu">
+                {% for pt in pipelinetypes %}
+                    <div class="item" data-value="{{pt.slug}}">{{pt.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui field">
+        <div id="transform-output-target-meta">
+        </div>
+    </div>
+    <div class="ui field">
+        <input type="submit" class="ui button" value="Save" />
+    </div>
+</form>
+<script>
+$(document).ready(function() {
+    $('#transform-input-source').dropdown('setting', 'onChange', function(value, text) {
+        $.get('/partials/meta/pipelinetypes/' + value + '/input-source', function(response) {
+            $('#transform-input-source-meta').html(response);
+        });
+    });
+    $('#transform-output-target').dropdown('setting', 'onChange', function(value, text) {
+        $.get('/partials/meta/pipelinetypes/' + value + '/output-target', function(response) {
+            $('#transform-output-target-meta').html(response);
+        });
+    });
+});
+</script>
+{% endblock %}

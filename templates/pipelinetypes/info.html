@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="ui header">{{pipelinetype.name}} ({{pipelinetype.slug}})</div>
+<p>Parameters to ask for</p>
+<div class="ui list">
+    {% for p in pipelinetype.params %}
+        <div class="ui item">{{p}}</div>
+    {% endfor %}
+</div>
+{% endblock %}

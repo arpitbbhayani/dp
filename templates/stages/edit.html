@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<form class="ui form" method="post" action="/closures/{{stage.cid}}/stages/{{stage._id}}/edit">
+    <div class="ui field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="a cool name for your stage" value="{{stage.name}}"/>
+    </div>
+    <div class="ui field">
+        <label>Data Format</label>
+        <div class="ui selection dropdown">
+            <input name="format" value="{{stage.location and stage.location.meta and stage.location.meta.format}}" type="hidden" />
+            <div class="default text">Data Format</div>
+            <div class="menu">
+                {% for df in dataformats %}
+                <div class="item" data-value="{{df.slug}}">{{df.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui field">
+        <label>Location</label>
+        <div class="ui selection dropdown" id="stage-location">
+            <input name="location" value="{{stage.location and stage.location.type}}" type="hidden" />
+            <div class="default text">Location</div>
+            <div class="menu">
+                {% for st in stagetypes %}
+                <div class="item" data-value="{{st.slug}}">{{st.name}}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui field">
+        <div id="stage-location-meta"></div>
+    </div>
+    <div class="ui field">
+        <input type="submit" class="ui button" value="Save" />
+    </div>
+</form>
+<script>
+$(document).ready(function() {
+    $('#stage-location').dropdown('setting', 'onChange', function(value, text) {
+        $.get('/partials/meta/stagetypes/' + value + '/stage', function(response) {
+            $('#stage-location-meta').html(response);
+        });
+    });
+});
+</script>
+{% endblock %}

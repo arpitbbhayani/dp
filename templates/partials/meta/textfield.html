@@ -1,0 +1,6 @@
+{% for param in params %}
+<div class="ui field">
+    <label>{{param}}</label>
+    <input type="text" placeholder="{{param}}" name="{{prefix}}-{{param}}" />
+</div>
+{% endfor %}
